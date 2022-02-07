@@ -1,14 +1,38 @@
 package plataformaFilmes;
 
 
+import Utils.RestUtils;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.*;
+
 public class PlataformaFilmesTest {
+
+    static String token;
+
+    /***
+     * Metodo Post com Map
+     */
+    @BeforeAll
+    public static void validarLoginMap(){
+       RestUtils.setBaseURI("http://localhost:8080/");
+
+        Map<String, String> map = new HashMap<>();
+        map.put("email", "aluno@email.com");
+        map.put("senha", "123456");
+
+        Response response = RestUtils.post(map,ContentType.JSON,"auth");
+
+        assertEquals(200, response.statusCode());
+        token = response.body().jsonPath().get("token");
+
+    }
 
     @Test
     public void validarLogin(){
@@ -29,42 +53,47 @@ public class PlataformaFilmesTest {
                     .thenReturn();*/
                 //.then().statusCode(200).extract().response().prettyPrint();
 
-        Response response = post(json,ContentType.JSON,"auth");
+        RestUtils.post(json,ContentType.JSON,"auth");
 
-        assertEquals(200, response.statusCode());
-        String token = response.body().jsonPath().get("token");
+        assertEquals(200, RestUtils.getResponse().statusCode());
+        String token = RestUtils.getResponse().body().jsonPath().get("token");
 
-        System.out.println(token);
+        System.out.println("Token gerado: " + token);
     }
 
-    /**
-     * Metodo Post
-     * @param json
-     * @param contentType
-     * @param endpoint
-     * @return
-     */
-    public Response post(Object json, ContentType contentType, String endpoint){
+    @Test
+    public void validarConsultaCategorias(){
+        Map<String, String> header = new HashMap<>();
+        header.put("Authorization", "Bearer "+token);
 
-        /* Exemplo
-         Response response = RestAssured
-                .given()
-                    .relaxedHTTPSValidation()
-                    .contentType(contentType)
-                    .body(json)
-                .when()
-                    .post(endPoint)
-                    .thenReturn();
-        return response;
-        **/
+        Response response = RestUtils.get(header,"categorias");
 
-        return RestAssured
-                .given()
-                    .relaxedHTTPSValidation()
-                    .contentType(contentType)
-                    .body(json)
-                .when()
-                    .post(endpoint)
-                .thenReturn();
+        assertEquals(200,response.statusCode());
+
+        assertEquals("Terror",response.body().jsonPath().get("tipo[2]"));
+
+        List<String> listTipo = response.body().jsonPath().get("tipo");
+        assertTrue(listTipo.contains("Terror"),"Não foi encontrado a lista");
+
+
+        System.out.println( "Lista de Filmes: " + response.getBody().jsonPath().get().toString());
     }
+
+    @Test
+    public void test(){
+        String [] vetorCompras = {"arroz", "feijão","cerveja", "carne"};
+        System.out.println(vetorCompras[1]);
+        System.out.println(Arrays.stream(vetorCompras).count());
+
+        List<String> listaCompras =  new ArrayList<>();
+        listaCompras.add("arroz");
+        listaCompras.add("feijão");
+        listaCompras.add("cerveja");
+        listaCompras.add("carne");
+
+        System.out.println(listaCompras.get(2));
+
+    }
+
+
 }
