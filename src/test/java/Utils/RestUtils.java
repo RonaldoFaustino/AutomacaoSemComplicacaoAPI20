@@ -65,6 +65,28 @@ public class RestUtils {
         return response;
     }
 
+    /**
+     * Metodo Post
+     * @param json
+     * @param contentType
+     * @param endpoint
+     * @return
+     */
+    public static Response post(Map<String, String> header, Object json, ContentType contentType, String endpoint){
+
+        response = RestAssured
+                .given()
+                .relaxedHTTPSValidation()
+                .contentType(contentType)
+                .headers(header)
+                .body(json)
+                .when()
+                .post(endpoint)
+                .thenReturn();
+
+        return response;
+    }
+
     /***
      * Metodo get
      * @param header
