@@ -9,4 +9,11 @@ public class GenericsSteps {
     public void validoQueReceboStatusNoResponse(int status) {
         Assert.assertEquals(status,RestUtils.getResponse().statusCode());
     }
+
+    @Entao("valido que no campo {string} possui o valor {string}")
+    public void validoQueNoCampoPossuiOValor(String key, String value) {
+        System.out.println( "Lista de Filmes: " + RestUtils.getResponse().body().jsonPath().get().toString());
+        Assert.assertEquals(value, RestUtils.getResponse().body().jsonPath().get(key));
+
+    }
 }
