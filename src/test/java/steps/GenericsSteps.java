@@ -7,6 +7,7 @@ import org.junit.Assert;
 public class GenericsSteps {
     @Entao("valido que recebo status {int} no response")
     public void validoQueReceboStatusNoResponse(int status) {
+        System.out.println(RestUtils.getResponse().prettyPrint());
         Assert.assertEquals(status,RestUtils.getResponse().statusCode());
     }
 

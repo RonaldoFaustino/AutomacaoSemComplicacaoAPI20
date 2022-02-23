@@ -1,14 +1,12 @@
 package maps;
 
-import com.google.common.collect.Maps;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FilmesMaps {
-
+public class FilmesMap {
+    public static int id;
     private static Map<String, String> header;
     private static Map<String, Object> filme;
     private static Map<String, Object> categorias1;
@@ -22,7 +20,7 @@ public class FilmesMaps {
     }
 
     public static void setHeader(Map<String, String> header) {
-        FilmesMaps.header = header;
+        FilmesMap.header = header;
     }
 
     public static Map<String, Object> getFilme() {
@@ -30,7 +28,7 @@ public class FilmesMaps {
     }
 
     public static void setFilme(Map<String, Object> filme) {
-        FilmesMaps.filme = filme;
+        FilmesMap.filme = filme;
     }
 
     public static Map<String, Object> getCategorias1() {
@@ -38,7 +36,7 @@ public class FilmesMaps {
     }
 
     public static void setCategorias1(Map<String, Object> categorias1) {
-        FilmesMaps.categorias1 = categorias1;
+        FilmesMap.categorias1 = categorias1;
     }
 
     public static Map<String, Object> getCategorias2() {
@@ -46,7 +44,7 @@ public class FilmesMaps {
     }
 
     public static void setCategorias2(Map<String, Object> categorias2) {
-        FilmesMaps.categorias2 = categorias2;
+        FilmesMap.categorias2 = categorias2;
     }
 
     public static Map<String, Object> getPlataforma() {
@@ -54,7 +52,7 @@ public class FilmesMaps {
     }
 
     public static void setPlataforma(Map<String, Object> plataforma) {
-        FilmesMaps.plataforma = plataforma;
+        FilmesMap.plataforma = plataforma;
     }
 
     public static List<Map<String, Object>> getListCategoria() {
@@ -62,7 +60,7 @@ public class FilmesMaps {
     }
 
     public static void setListCategoria(List<Map<String, Object>> listCategoria) {
-        FilmesMaps.listCategoria = listCategoria;
+        FilmesMap.listCategoria = listCategoria;
     }
 
     public static List<Map<String, Object>> getListPlataforma() {
@@ -70,7 +68,7 @@ public class FilmesMaps {
     }
 
     public static void setListPlataforma(List<Map<String, Object>> listPlataforma) {
-        FilmesMaps.listPlataforma = listPlataforma;
+        FilmesMap.listPlataforma = listPlataforma;
     }
 
     public static void initCategoria(){
@@ -100,7 +98,7 @@ public class FilmesMaps {
     public static void initFilme(){
         filme = new HashMap<>();
         filme.put("nome", "Alerta Vermelhor");
-        filme.put("descrição", "Um alerta vermelho da Interpol é emetido e o agente do FBI");
+        filme.put("descricao", "Um alerta vermelho da Interpol é emetido e o agente do FBI");
         filme.put("duracao", 1.35);
         filme.put("categorias", listCategoria);
         filme.put("plataformas",listPlataforma);
