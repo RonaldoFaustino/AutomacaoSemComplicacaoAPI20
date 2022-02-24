@@ -92,6 +92,22 @@ public class RestUtils {
      * @param header
      * @return
      */
+    public static Response get(Map<String, String> header,Map<String, Object> param, String endpoint){
+        return response = RestAssured
+                .given()
+                .relaxedHTTPSValidation()
+                .headers(header)
+                .params(param)
+                .when()
+                .get(endpoint)
+                .thenReturn();
+    }
+
+    /***
+     * Metodo get
+     * @param header
+     * @return
+     */
     public static Response get(Map<String, String> header, String endpoint){
         return response = RestAssured
                 .given()
@@ -100,5 +116,27 @@ public class RestUtils {
                 .when()
                 .get(endpoint)
                 .thenReturn();
+    }
+
+    /**
+     * Metodo Put
+     * @param json
+     * @param contentType
+     * @param endpoint
+     * @return
+     */
+    public static Response put(Map<String, String> header, Object json, ContentType contentType, String endpoint){
+
+        response = RestAssured
+                .given()
+                .relaxedHTTPSValidation()
+                .contentType(contentType)
+                .headers(header)
+                .body(json)
+                .when()
+                .put(endpoint)
+                .thenReturn();
+
+        return response;
     }
 }
