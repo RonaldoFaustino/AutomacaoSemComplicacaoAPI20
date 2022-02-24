@@ -7,6 +7,9 @@ import io.cucumber.java.pt.Quando;
 import io.restassured.http.ContentType;
 import maps.FilmesMap;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class FilmesSteps {
 
     @Dado("que tenha um payload da API de Filme")
@@ -24,6 +27,20 @@ public class FilmesSteps {
 
     @Quando("realizo uma requisicao do tipo GET de Filme")
     public void realizo_uma_requisicao_do_tipo_get_de_filme() {
+        Map<String, Object> param = new HashMap<>();
+        String nomeFilme = FilmesMap.getFilme().get("nome").toString();
+        param.put("nome", nomeFilme);
+        RestUtils.get(FilmesMap.getHeader(), param, "filmes");
+    }
 
+    @Dado("altero o indice {int} da lista de Categotias de filme com os valores")
+    public void alteroOIndiceDaListaDeCategotiasDeFilmeComOsValores(int indice, Map<String, Object> map) {
+        FilmesMap.getListCategoria().get(indice).putAll(map);
+
+    }
+
+    @Quando("realizo uma requisicao do tipo PUT de Filme")
+    public void realizoUmaRequisicaoDoTipoPUTDeFilme() {
+        RestUtils.put(FilmesMap.getHeader(), FilmesMap.getFilme(), ContentType.JSON, "filmes/"+ FilmesMap.id);
     }
 }
